@@ -16,6 +16,8 @@ func GetRoutes() http.Handler {
 	r.Get("/location/{id}", GetLocationByID)
 	r.Get("/location", GetLocation)
 	r.Post("/location", CreateLocation)
-
+	r.Get("/community", GetCommunity)
+	r.Get("/community/{id}", GetCommunityByID)
+	r.Post("/community", CreateCommunity)
 	return r
 }
