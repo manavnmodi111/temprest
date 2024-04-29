@@ -13,6 +13,7 @@ var location []models.Location
 var membership []models.Membership
 var community []models.Community
 
+// Endpoints For Location
 func CreateLocation(w http.ResponseWriter, r *http.Request) {
 	var newItem models.Location
 	err := json.NewDecoder(r.Body).Decode(&newItem)
@@ -129,6 +130,29 @@ func UpdateLocationByID(w http.ResponseWriter, r *http.Request) {
 	w.Write(jsonData)
 }
 
+func DeleteLocationByID(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+
+	var found bool
+	for i, item := range location {
+		if item.ID == id {
+			// Remove item from the slice
+			location = append(location[:i], location[i+1:]...)
+			found = true
+			break
+		}
+	}
+
+	if !found {
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte("Item not found"))
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
+}
+
+// Endpoints For Membership
 func CreateMembership(w http.ResponseWriter, r *http.Request) {
 	var members models.Membership
 	err := json.NewDecoder(r.Body).Decode(&members)
@@ -244,6 +268,29 @@ func UpdateMembershipByID(w http.ResponseWriter, r *http.Request) {
 	w.Write(jsonData)
 }
 
+func DeleteMembershipByID(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+
+	var found bool
+	for i, item := range membership {
+		if item.ID == id {
+			// Remove item from the slice
+			membership = append(membership[:i], membership[i+1:]...)
+			found = true
+			break
+		}
+	}
+
+	if !found {
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte("Item not found"))
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
+}
+
+// Endpoints For Community
 func CreateCommunity(w http.ResponseWriter, r *http.Request) {
 	var com models.Community
 	err := json.NewDecoder(r.Body).Decode(&com)
@@ -357,4 +404,26 @@ func UpdateCommunityByID(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	// Write JSON response
 	w.Write(jsonData)
+}
+
+func DeleteCommunityByID(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+
+	var found bool
+	for i, item := range community {
+		if item.ID == id {
+			// Remove item from the slice
+			community = append(community[:i], community[i+1:]...)
+			found = true
+			break
+		}
+	}
+
+	if !found {
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte("Item not found"))
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
 }
