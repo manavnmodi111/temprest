@@ -1,0 +1,5 @@
+{
+"LogLevel": "debug",
+"HttpServer": {
+    "Port": "8080"
+}}

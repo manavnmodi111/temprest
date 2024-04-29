@@ -1,0 +1,165 @@
+{
+    "produces": [
+        "application/json"
+    ],
+    "schemes": [
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample API",
+        "title": "Sample API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
+    "paths": {
+        "/items": {
+            "post": {
+                "description": "Create a new item",
+                "summary": "Create a new item",
+                "operationId": "create-item",
+                "parameters": [
+                    {
+                        "description": "Item object",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Item"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/main.Item"
+                        }
+                    }
+                }
+            }
+        },
+        "/items/{name}": {
+            "get": {
+                "description": "Get an item by its name",
+                "summary": "Get an item by ID",
+                "operationId": "get-item-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Item name",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.Item"
+                        }
+                    }
+                }
+            }
+        },
+        "/locations": {
+            "get": {
+                "description": "Get all locations",
+                "summary": "Get all locations",
+                "operationId": "get-all-locations",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/main.Location"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new location",
+                "summary": "Create a new location",
+                "operationId": "create-location",
+                "parameters": [
+                    {
+                        "description": "Location object",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Location"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/main.Location"
+                        }
+                    }
+                }
+            }
+        },
+        "/locations/{id}": {
+            "get": {
+                "description": "Get a location by its ID",
+                "summary": "Get a location by ID",
+                "operationId": "get-location-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Location ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.Location"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "main.Item": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.Location": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

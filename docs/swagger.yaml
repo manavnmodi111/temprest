@@ -1,0 +1,109 @@
+basePath: /api/v1
+definitions:
+  main.Item:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  main.Location:
+    properties:
+      id:
+        type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
+      name:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a sample API
+  title: Sample API
+  version: "1.0"
+paths:
+  /items:
+    post:
+      description: Create a new item
+      operationId: create-item
+      parameters:
+      - description: Item object
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.Item'
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.Item'
+      summary: Create a new item
+  /items/{name}:
+    get:
+      description: Get an item by its name
+      operationId: get-item-by-id
+      parameters:
+      - description: Item name
+        in: path
+        name: name
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Item'
+      summary: Get an item by ID
+  /locations:
+    get:
+      description: Get all locations
+      operationId: get-all-locations
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Location'
+            type: array
+      summary: Get all locations
+    post:
+      description: Create a new location
+      operationId: create-location
+      parameters:
+      - description: Location object
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.Location'
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.Location'
+      summary: Create a new location
+  /locations/{id}:
+    get:
+      description: Get a location by its ID
+      operationId: get-location-by-id
+      parameters:
+      - description: Location ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Location'
+      summary: Get a location by ID
+produces:
+- application/json
+schemes:
+- http
+swagger: "2.0"
