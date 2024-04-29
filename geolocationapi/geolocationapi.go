@@ -80,6 +80,55 @@ func GetLocation(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(location)
 }
 
+func UpdateLocationByID(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+
+	var updatedItem *models.Location
+	var updatedItemIndex int
+	for i, item := range location {
+		if item.ID == id {
+			updatedItem = &location[i]
+			updatedItemIndex = i
+			break
+		}
+	}
+
+	if updatedItem == nil {
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte("Item not found"))
+		return
+	}
+
+	var updatedData models.Location
+	err := json.NewDecoder(r.Body).Decode(&updatedData)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "Error decoding request body: %v", err)
+		return
+	}
+
+	// Update item fields
+	updatedItem.Name = updatedData.Name
+	// Update other fields as needed
+
+	// Marshal updated item to JSON
+	jsonData, err := json.Marshal(updatedItem)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Error marshaling JSON"))
+		return
+	}
+
+	// Update item in the slice
+	location[updatedItemIndex] = *updatedItem
+
+	// Set response status code and header
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
+	// Write JSON response
+	w.Write(jsonData)
+}
+
 func CreateMembership(w http.ResponseWriter, r *http.Request) {
 	var members models.Membership
 	err := json.NewDecoder(r.Body).Decode(&members)
@@ -146,6 +195,55 @@ func GetMembership(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(membership)
 }
 
+func UpdateMembershipByID(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+
+	var updatedItem *models.Membership
+	var updatedItemIndex int
+	for i, item := range membership {
+		if item.ID == id {
+			updatedItem = &membership[i]
+			updatedItemIndex = i
+			break
+		}
+	}
+
+	if updatedItem == nil {
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte("Item not found"))
+		return
+	}
+
+	var updatedData models.Membership
+	err := json.NewDecoder(r.Body).Decode(&updatedData)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "Error decoding request body: %v", err)
+		return
+	}
+
+	// Update item fields
+	updatedItem.Role = updatedData.Role
+	// Update other fields as needed
+
+	// Marshal updated item to JSON
+	jsonData, err := json.Marshal(updatedItem)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Error marshaling JSON"))
+		return
+	}
+
+	// Update item in the slice
+	membership[updatedItemIndex] = *updatedItem
+
+	// Set response status code and header
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
+	// Write JSON response
+	w.Write(jsonData)
+}
+
 func CreateCommunity(w http.ResponseWriter, r *http.Request) {
 	var com models.Community
 	err := json.NewDecoder(r.Body).Decode(&com)
@@ -210,4 +308,53 @@ func GetCommunityByID(w http.ResponseWriter, r *http.Request) {
 
 func GetCommunity(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(community)
+}
+
+func UpdateCommunityByID(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+
+	var updatedItem *models.Community
+	var updatedItemIndex int
+	for i, item := range community {
+		if item.ID == id {
+			updatedItem = &community[i]
+			updatedItemIndex = i
+			break
+		}
+	}
+
+	if updatedItem == nil {
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte("Item not found"))
+		return
+	}
+
+	var updatedData models.Community
+	err := json.NewDecoder(r.Body).Decode(&updatedData)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "Error decoding request body: %v", err)
+		return
+	}
+
+	// Update item fields
+	updatedItem.Name = updatedData.Name
+	// Update other fields as needed
+
+	// Marshal updated item to JSON
+	jsonData, err := json.Marshal(updatedItem)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Error marshaling JSON"))
+		return
+	}
+
+	// Update item in the slice
+	community[updatedItemIndex] = *updatedItem
+
+	// Set response status code and header
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
+	// Write JSON response
+	w.Write(jsonData)
 }
