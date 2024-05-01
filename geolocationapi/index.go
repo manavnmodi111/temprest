@@ -4,13 +4,24 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
+// GetRoutes returns the HTTP handler for the geolocation API.
 func GetRoutes() http.Handler {
 
 	r := chi.NewRouter()
 
-	//Endpoints for membership
+	r.Get("/swagger/*", httpSwagger.Handler(
+		httpSwagger.URL("/swagger.json"), // The path to your swagger.json file
+	))
+
+	// Serve Swagger JSON
+	r.Get("/swagger.json", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./docs/swagger.json")
+	})
+	
+	// Endpoints for membership
 	r.Get("/membership", GetMembership)
 	r.Get("/membership/{id}", GetMembershipByID)
 	r.Post("/membership", CreateMembership)

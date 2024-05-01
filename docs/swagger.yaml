@@ -1,0 +1,40 @@
+basePath: /
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a sample API for demonstrating Swagger in Golang with the chi
+    package.
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /healthcheck:
+    get:
+      consumes:
+      - application/json
+      description: Get a simple healthcheck message
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      summary: Get a healthcheck message
+      tags:
+      - healthcheck
+  /hello:
+    get:
+      consumes:
+      - application/json
+      description: Get a simple hello message
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Hello, world!
+          schema:
+            type: string
+      summary: Get a hello message
+      tags:
+      - hello
+swagger: "2.0"

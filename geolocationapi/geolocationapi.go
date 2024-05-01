@@ -53,6 +53,7 @@ func CreateLocation(w http.ResponseWriter, r *http.Request) {
 	// Write JSON response
 	w.Write(jsonData)
 }
+
 func GetLocationByID(w http.ResponseWriter, r *http.Request) {
 	// Get the ID parameter from the URL
 	id := chi.URLParam(r, "id")
