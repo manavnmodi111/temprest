@@ -1,4 +1,38 @@
 basePath: /
+definitions:
+  geolocationapi.Community:
+    properties:
+      id:
+        type: string
+      location:
+        $ref: '#/definitions/geolocationapi.Location'
+      members:
+        items:
+          $ref: '#/definitions/geolocationapi.Membership'
+        type: array
+      name:
+        type: string
+    type: object
+  geolocationapi.Location:
+    properties:
+      id:
+        type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
+      name:
+        type: string
+    type: object
+  geolocationapi.Membership:
+    properties:
+      communityId:
+        type: string
+      id:
+        type: string
+      role:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact: {}
@@ -7,6 +41,423 @@ info:
   title: Swagger Example API
   version: "1.0"
 paths:
+  /geolocationapi/community:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves all Community from the MongoDB collection
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/geolocationapi.Community'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get all Community
+      tags:
+      - Community
+    post:
+      consumes:
+      - application/json
+      description: Creates a new community and adds it to the MongoDB collection
+      parameters:
+      - description: Community object to be created
+        in: body
+        name: community
+        required: true
+        schema:
+          $ref: '#/definitions/geolocationapi.Community'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: community created
+          schema:
+            $ref: '#/definitions/geolocationapi.Community'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Create a new community
+      tags:
+      - Community
+  /geolocationapi/community/{id}:
+    delete:
+      description: Deletes a community from the MongoDB collection by its ID
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete a community by ID
+      tags:
+      - Community
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a community from the MongoDB collection by its ID
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: community found
+          schema:
+            $ref: '#/definitions/geolocationapi.Community'
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get a community by ID
+      tags:
+      - Community
+    put:
+      consumes:
+      - application/json
+      description: Updates a community name in the MongoDB collection by its ID
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated community object
+        in: body
+        name: updatedCommunity
+        required: true
+        schema:
+          $ref: '#/definitions/geolocationapi.Community'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: community updated
+          schema:
+            $ref: '#/definitions/geolocationapi.Community'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update a community by ID
+      tags:
+      - Community
+  /geolocationapi/location:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves all locations from the MongoDB collection
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/geolocationapi.Location'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get all locations
+      tags:
+      - locations
+    post:
+      consumes:
+      - application/json
+      description: Creates a new location and adds it to the MongoDB collection
+      parameters:
+      - description: Location object to be created
+        in: body
+        name: Location
+        required: true
+        schema:
+          $ref: '#/definitions/geolocationapi.Location'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: location created
+          schema:
+            $ref: '#/definitions/geolocationapi.Location'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Create a new location
+      tags:
+      - locations
+  /geolocationapi/location/{id}:
+    delete:
+      description: Deletes a location from the MongoDB collection by its ID
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Int
+          schema:
+            type: string
+      summary: Delete a location by ID
+      tags:
+      - locations
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a location from the MongoDB collection by its ID
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: location found
+          schema:
+            $ref: '#/definitions/geolocationapi.Location'
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get a location by ID
+      tags:
+      - locations
+    put:
+      consumes:
+      - application/json
+      description: Updates a location name in the MongoDB collection by its ID
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated location data
+        in: body
+        name: updateData
+        required: true
+        schema:
+          $ref: '#/definitions/geolocationapi.Location'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: location updated
+          schema:
+            $ref: '#/definitions/geolocationapi.Location'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update a location by ID
+      tags:
+      - locations
+  /geolocationapi/membership:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves all membership from the MongoDB collection
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/geolocationapi.Membership'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get all membership
+      tags:
+      - membership
+    post:
+      consumes:
+      - application/json
+      description: Creates a new membership and adds it to the MongoDB collection
+      parameters:
+      - description: Membership object to be created
+        in: body
+        name: Membership
+        required: true
+        schema:
+          $ref: '#/definitions/geolocationapi.Membership'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: membership created
+          schema:
+            $ref: '#/definitions/geolocationapi.Membership'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Create a new membership
+      tags:
+      - membership
+  /geolocationapi/membership/{id}:
+    delete:
+      description: Deletes a location from the MongoDB collection by its ID
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Int
+          schema:
+            type: string
+      summary: Delete a membership by ID
+      tags:
+      - membership
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a membership from the MongoDB collection by its ID
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: membership found
+          schema:
+            $ref: '#/definitions/geolocationapi.Membership'
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get a membership by ID
+      tags:
+      - membership
+    put:
+      consumes:
+      - application/json
+      description: Updates a membership role in the MongoDB collection by its ID
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated Membership data
+        in: body
+        name: updateData
+        required: true
+        schema:
+          $ref: '#/definitions/geolocationapi.Membership'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Membership updated
+          schema:
+            $ref: '#/definitions/geolocationapi.Membership'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update a membership by ID
+      tags:
+      - membership
   /healthcheck:
     get:
       consumes:
